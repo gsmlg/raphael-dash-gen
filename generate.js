@@ -2,6 +2,7 @@ import fs from 'fs';
 import {sync as mkdir} from 'mkdirp';
 import jsdom from 'jsdom';
 import Sequelize from 'sequelize';
+import {exec} from 'child_process';
 
 var docDir = './Raphael.docset/Contents/Resources/Documents';
 mkdir(docDir);
@@ -12,6 +13,8 @@ function cp(f1, f2) {
   fs.writeFileSync(f2, f);
 }
 
+cp('./ico.png','./Raphael.docset/ico.png');
+cp('./ico@2x.png','./Raphael.docset/ico@2x.png');
 cp('./Info.plist', './Raphael.docset/Contents/Info.plist');
 cp('./dr.css', docDir + '/dr.css');
 cp('./dr-print.css', docDir + '/dr-print.css');
@@ -71,7 +74,10 @@ SearchIndex.sync({force: true})
           doc.path = 'reference.html' + el.getAttribute('href', true);
           return doc;
         });
-        SearchIndex.bulkCreate(docs);
+        SearchIndex.bulkCreate(docs).then(function(){
+          var name = 'Raphael';
+          exec(`tar --exclude='.DS_Store' -cvzf ${name}.tgz ${name}.docset`);
+        });
       }
     );
 
