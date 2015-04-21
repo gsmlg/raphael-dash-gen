@@ -13,8 +13,8 @@ function cp(f1, f2) {
   fs.writeFileSync(f2, f);
 }
 
-cp('./ico.png','./Raphael.docset/ico.png');
-cp('./ico@2x.png','./Raphael.docset/ico@2x.png');
+cp('./icon.png','./Raphael.docset/icon.png');
+cp('./icon@2x.png','./Raphael.docset/icon@2x.png');
 cp('./Info.plist', './Raphael.docset/Contents/Info.plist');
 cp('./dr.css', docDir + '/dr.css');
 cp('./dr-print.css', docDir + '/dr-print.css');
